@@ -1,0 +1,5 @@
+APScheduler==3.3.1
+Flask==0.12.1
+lxml==3.7.3
+requests==2.13.0
+pymongo==3.4.0
