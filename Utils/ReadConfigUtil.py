@@ -2,7 +2,14 @@
 __author__ = 'Yuluo'
 
 import os
-import ConfigParser
+try:
+    import ConfigParser
+except:
+    import configparser as ConfigParser
+version = False
+import sys
+if sys.version_info[0] == 3 :
+    version = True
 '''
     读取配置文件工具类
         - 采用单例模式
@@ -18,7 +25,10 @@ class ReadConfigUtil(object):
         self.path = os.path.split(os.path.split(os.path.realpath(__file__))[0])[0]
         self.realPath = os.path.join(self.path , "conf.ini")
         self.configParse = NewConfigerParser()
-        self.configParse.read(self.realPath)
+        if version:
+            self.configParse.read(self.realPath ,encoding='utf-8')
+        else:
+            self.configParse.read(self.realPath)
 
     '''
         单例模式
@@ -43,13 +53,12 @@ class ReadConfigUtil(object):
         try:
             result = self.configParse.getint(field , key)
         except:
-            print "方法getInt() 抛出异常"
+            print ("方法getInt() 抛出异常")
             result = 0
         return result
 
 
 class NewConfigerParser(ConfigParser.ConfigParser):
-
     """
     option 大小写不敏感问题
     """
@@ -57,7 +66,7 @@ class NewConfigerParser(ConfigParser.ConfigParser):
         return optionstr
 
 if __name__ == '__main__':
-    print ReadConfigUtil().get("freeProxy")
+    print (ReadConfigUtil().get("freeProxy"))
     # print id(ReadConfigUtil())
     # print id(ReadConfigUtil())
     # print id(ReadConfigUtil())

@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 __author__ = 'Yuluo'
 
-
+import sys
+sys.path.append('../DB')
 from pymongo import MongoClient
 import random
 from DBClient import DBClient
@@ -83,5 +84,5 @@ class MongoDBClient(DBClient):
 
 if __name__ == '__main__':
    client = MongoDBClient('IpProxyPool', 'verify_ip')
-   print client.getcount()
+   print (client.getcount())
 

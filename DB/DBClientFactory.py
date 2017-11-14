@@ -5,9 +5,11 @@ __author__ = 'Yuluo'
     数据库工厂类
         -返回具体数据库操作类
 '''
+# import sys
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
 import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+sys.path.append("../DB")
 from Utils.ReadConfigUtil import ReadConfigUtil
 from Utils.Constants import mongodb ,redisdb ,mysqldb ,db , db_type ,db_host ,db_port
 class DBClientFactory(object):

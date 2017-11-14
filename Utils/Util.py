@@ -4,8 +4,8 @@
 """
 import requests
 import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
 import functools
 from Utils.Logger import  Logger
 from Utils.ReadConfigUtil import ReadConfigUtil

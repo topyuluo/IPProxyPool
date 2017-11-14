@@ -50,7 +50,7 @@ def get_more(num):
 @app.route('/delete/', methods=['GET'])
 def delete():
     proxy = request.args.get('proxy')
-    print proxy
+    print( proxy)
     db.remove(proxy)
     return 'success'
 

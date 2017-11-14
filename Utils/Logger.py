@@ -51,5 +51,5 @@ class Logger():
     def getLog(self):
         return  self.logger
 if __name__ == '__main__':
-    print os.path.exists(os.path.join(os.path.split(os.path.split(os.path.realpath(__file__))[0])[0],'log'))
+    print (os.path.exists(os.path.join(os.path.split(os.path.split(os.path.realpath(__file__))[0])[0],'log')))
     os.makedirs(os.path.join(os.path.split(os.path.split(os.path.realpath(__file__))[0])[0],'log'))

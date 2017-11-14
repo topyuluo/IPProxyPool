@@ -6,9 +6,6 @@ import  re
 from Utils.Download import downloadPage
 from Utils.Util import time
 from Utils.Logger import Logger
-import  sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
 import json
 
 """
@@ -171,4 +168,4 @@ class CollectFreeProxy(object):
 if __name__ =='__main__':
     proxy = CollectFreeProxy.freeProxyFifth()
     for ip in proxy:
-        print ip
+        print (ip)

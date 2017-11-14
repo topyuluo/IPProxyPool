@@ -3,8 +3,9 @@ __author__ = 'Yuluo'
 import  requests
 import time
 import  sys
-reload(sys)
-sys.setdefaultencoding("utf-8")
+# reload(sys)
+# sys.setdefaultencoding("utf-8")
+sys.path.append("../Utils")
 from Constants import retryTime , timeout
 from Utils.Logger import Logger
 import random
