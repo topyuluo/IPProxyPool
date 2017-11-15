@@ -41,7 +41,7 @@ processNum = 3
 sleepTime = 60*31
 
 '''任务下载周期'''
-schedulerMinutes = 30 #单位为分钟
+schedulerMinutes = 1 #单位为分钟
 
 '''邮件配置'''
 smtp_server = 'smtp.xxx.com'

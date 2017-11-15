@@ -2,10 +2,9 @@
 __author__ = 'Yuluo'
 
 import sys
-sys.path.append('../DB')
 from pymongo import MongoClient
 import random
-from DBClient import DBClient
+from DB.DBClient import DBClient
 from Utils.Constants import defaultHost , defaultPort
 """
     MongoDB数据库操作类

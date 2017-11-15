@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 # @Author  : YuLuo
 
+import sys
+sys.path.append("..")
 from WebService.Api import run as WebRun
 from Schedule.ProxyRefreshSchedule import run as RefreshRun
 from Schedule.ProxyValidate import run as ValidateRun

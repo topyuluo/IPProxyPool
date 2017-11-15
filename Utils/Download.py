@@ -2,11 +2,7 @@
 __author__ = 'Yuluo'
 import  requests
 import time
-import  sys
-# reload(sys)
-# sys.setdefaultencoding("utf-8")
-sys.path.append("../Utils")
-from Constants import retryTime , timeout
+from Utils.Constants import retryTime , timeout
 from Utils.Logger import Logger
 import random
 logger = Logger("scheduler").getLog()
@@ -69,7 +65,7 @@ def downloadPage(url ,retryTime = retryTime ):
             response = requests.get(url, headers=headers, timeout=timeout)
 
             if response.status_code == requests.codes.ok:
-                return response.content
+                return response.text
             else:
                 logger.warn("下载失败，进行第%s次请求重试" % str(4-retryTime))
                 time.sleep(random.randint(1 , 5))

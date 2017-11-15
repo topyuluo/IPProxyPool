@@ -5,11 +5,8 @@ __author__ = 'Yuluo'
     数据库工厂类
         -返回具体数据库操作类
 '''
-# import sys
-# reload(sys)
-# sys.setdefaultencoding('utf-8')
 import sys
-sys.path.append("../DB")
+sys.path.append('..')
 from Utils.ReadConfigUtil import ReadConfigUtil
 from Utils.Constants import mongodb ,redisdb ,mysqldb ,db , db_type ,db_host ,db_port
 class DBClientFactory(object):
@@ -29,21 +26,23 @@ class DBClientFactory(object):
         return self.getClient()
 
     def getClient(self):
-        __Client = None
-
+        __Module_Name = None
+        __Class_Name = None
         if mongodb == self.readConfig():
-            __Client = 'MongoDBClient'
-
+            __Module_Name = 'DB.MongoDBClient'
+            __Class_Name = 'MongoDBClient'
         if redisdb == self.readConfig():
-            __Client = 'RedisDBClient'
+            __Module_Name = 'DB.RedisDBClient'
+            __Class_Name = 'RedisDBClient'
 
         if mysqldb == self.readConfig():
-            __Client = 'MysqlDBClient'
+            __Module_Name = 'DB.MysqlDBClient'
+            __Class_Name = 'MysqlDBClient'
 
-        if __Client is None :
+        if __Module_Name is None :
             print("配置文件错误,初始化数据库失败")
             return None
-        return self.getInstance(__Client ,__Client ,self.dbName , self.dbTable ,host = self.host ,port = self.port)
+        return self.getInstance(__Module_Name ,__Class_Name ,self.dbName , self.dbTable ,host = self.host ,port = self.port)
 
     def getInstance(self ,module_name , class_name , *args , **kw):
         """
