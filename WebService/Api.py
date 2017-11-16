@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from  flask import  Flask , jsonify ,request
+from  flask import  Flask , jsonify ,request , make_response ,render_template
 from DB.DBClientFactory import DBClientFactory
 from Utils.Logger import Logger
 from Utils.Constants import dbName , validatePool
@@ -8,8 +8,9 @@ from Utils.ReadConfigUtil import ReadConfigUtil
 
 logger = Logger('web').getLog()
 web_port = ReadConfigUtil().getInt('WebApi' , 'port')
-app = Flask(__name__)
 
+
+app = Flask(__name__)
 api_list = {
     'get': 'get an usable proxy',
     'refresh': 'refresh proxy pool',
@@ -19,8 +20,11 @@ api_list = {
 }
 db = DBClientFactory(dbName , validatePool ).createDB()
 @app.route('/')
-def hello():
-    return jsonify(api_list)
+def index():
+    count = db.getcount()
+    response = make_response(render_template('home.html' , count=count))
+    # return jsonify(api_list)
+    return response
 
 @app.route('/get/')
 def get_one():

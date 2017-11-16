@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <link href="{{ url_for('static', filename='style.css', _external=True)}}" rel="stylesheet">
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>IP代理池</title>
+    </head>
+
+    <body>
+        <div class="top"></div>
+        <div class="content">
+            <div style="width: 100% ;height: 30px ; padding: 20px "><span style="font-weight: bold">可用ip总量:</span>　<span style="color: red;">{{ count }}</span>个</div>
+            <div style="width: 100% ;height: 2px ; border-bottom: silver 1px dashed"></div>
+                <div style="width: 100% ; height: auto ; padding: 20px">
+                    <span style="font-weight: bold">接口api:</span>
+                    <div style="padding: 10px ; font-size: 10px" >
+                    <table text-align="center" style="color: darkgoldenrod">
+                        <tr>
+                            <td>名字</td>
+                            <td>路径</td>
+                            <td>介绍</td>
+                            <td>备注</td>
+                        </tr>
+                        <tr style="color: darkgreen;">
+                            <td>获取单个ip</td>
+                            <td>http://ip:port/get</td>
+                            <td>get an usable proxy</td>
+                            <td></td>
+                        </tr>
+                         <tr style="color: darkgreen;">
+                            <td>获取多个ip</td>
+                            <td>http://ip:port/get/num</td>
+                            <td>num need less than 10</td>
+                            <td></td>
+                        </tr>
+                         <tr style="color: darkgreen;">
+                            <td>刷新下载池</td>
+                            <td>http://ip:port/refresh</td>
+                            <td>refresh proxy pool</td>
+                            <td>已弃用</td>
+                        </tr>
+                         <tr style="color: darkgreen;">
+                            <td>获取可用ip个数</td>
+                            <td>http://ip:port/getcount</td>
+                            <td>return proxy count num </td>
+                            <td></td>
+                        </tr>
+                         <tr style="color: darkgreen;">
+                            <td>代理删除</td>
+                            <td>http://ip:port/delete?proxy=x.x.x.x:xx</td>
+                            <td>delete an unable proxy </td>
+                            <td>proxy为要删除的ip</td>
+                        </tr>
+                    </table>
+                        </div>
+                </div>
+             <div style="width: 100% ;height: 2px ; border-bottom: silver 1px dashed"></div>
+                <div style="padding: 20px">
+                    <span style="font-weight: bold">代理集成:</span>
+                    <pre style="color: darkgreen">
+             def proxy():
+                import json
+                response = requests.get('http://xxxx.xxxx.xxxx.xxxx:5001/get/')
+                jsonStr = json.loads(response.text)
+                proxy = jsonStr['proxy']
+                proxy = {
+                  'http': proxy,
+                  'https': proxy}
+                return proxy
+                    </pre>
+                </div>
+
+        </div>
+
+    </body>
+</html>
