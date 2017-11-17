@@ -40,8 +40,11 @@ class ProxyRefreshSchedule(object):
         start_time = datetime.now()
         proxy_set = set()
         for freeProxy in self.config.getSections(proxySections):
-            for proxy in getattr(CollectFreeProxy ,freeProxy.strip())():
-                proxy_set.add(proxy.strip())
+            try:
+                for proxy in getattr(CollectFreeProxy ,freeProxy.strip())():
+                    proxy_set.add(proxy.strip())
+            except Exception as e :
+                logger.error('error')
         logger.info('begin insert data !')
         i = 0
         for proxy in proxy_set:

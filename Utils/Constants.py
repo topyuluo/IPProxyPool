@@ -33,7 +33,7 @@ commonPool = 'Common_IP'  #ip池总表
 validatePool = 'verify_ip' #验证ip表
 
 '''Http请求配置'''
-retryTime = 3
+retryTime = 5
 timeout = 30
 
 '''进程配置'''
@@ -41,7 +41,7 @@ processNum = 3
 sleepTime = 60*31
 
 '''任务下载周期'''
-schedulerMinutes = 20 #单位为分钟
+schedulerMinutes = 15 #单位为分钟
 
 '''邮件配置'''
 smtp_server = 'smtp.xxx.com'

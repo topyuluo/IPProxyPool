@@ -62,12 +62,20 @@ def downloadPage(url ,retryTime = retryTime ):
             }
     if retryTime > 0:
         try:
-            response = requests.get(url, headers=headers, timeout=timeout)
+            if retryTime <3 :
+                from DB.DBClientFactory import DBClientFactory
+                from Utils.Constants import dbName, validatePool
+                db = DBClientFactory(dbName, validatePool).createDB()
+                proxy = db.get()
+                dict = {'http': proxy}
+                response = requests.get(url , headers = headers , timeout = timeout , proxies = dict)
+            else:
+                response = requests.get(url, headers=headers, timeout=timeout)
 
             if response.status_code == requests.codes.ok:
                 return response.text
             else:
-                logger.warn("下载失败，进行第%s次请求重试" % str(4-retryTime))
+                logger.warn("下载失败，进行第%s次请求重试" % str(6-retryTime))
                 time.sleep(random.randint(1 , 5))
                 return downloadPage(url , retryTime = retryTime - 1 )
         except Exception:
