@@ -166,6 +166,6 @@ class CollectFreeProxy(object):
 
 
 if __name__ =='__main__':
-    proxy = CollectFreeProxy.freeProxyFifth()
+    proxy = CollectFreeProxy.firstFreeProxy()
     for ip in proxy:
         print (ip)

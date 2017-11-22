@@ -12,20 +12,15 @@ from multiprocessing import Process
 """
     统一启动方法入口
 """
-class Run(object):
-
-    def __init__(self):
-        pass
-
-    def run(self):
+def run():
 
         list = []
 
-        webProcess = Process(target= WebRun )   #web启动入口
+        webProcess = Process(target= WebRun ,name='webapi')   #web启动入口
         list.append(webProcess)
-        refreshProcess = Process(target=RefreshRun) #下载proxy入口
+        refreshProcess = Process(target=RefreshRun , name='proxy') #下载proxy入口
         list.append(refreshProcess)
-        validate = Process(target=ValidateRun)  #验证proxy入口
+        validate = Process(target=ValidateRun , name='validateproxy')  #验证proxy入口
         list.append(validate)
 
         for process in list:
@@ -35,5 +30,5 @@ class Run(object):
             process.join()
 
 if __name__ == '__main__':
-    Run().run()
+    run()
 

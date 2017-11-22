@@ -10,9 +10,9 @@ from Utils.Constants import sleepTime ,dbName ,commonPool ,validatePool
 """
     验证代理类
 """
+
 from Utils.Logger import Logger
 logger = Logger('validate').getLog()
-
 class ProxyValidate(object):
     def __init__(self):
         self.__dbClient = DBClientFactory(dbName , commonPool ).createDB()
@@ -23,22 +23,34 @@ class ProxyValidate(object):
         validate proxy
         :return:
         """
-        proxy = None
+        data = None
         flag = True
         while flag:
-            proxy = self.__dbClient.get()
-            if proxy is None:
+            data = self.__dbClient.get_one()
+            if data is None:
                 logger.warn('当前仓库无ip, 进程休眠 ,休眠时间：%s 秒' % sleepTime)
                 time.sleep(sleepTime)
             else:
                 flag = False
-        while proxy:
-            if validUserProxy(proxy):
-                logger.info('success : %s' % proxy)
+        while data:
+            validatetime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+            if validUserProxy(data):
+                logger.info('success : %s' % data)
+                self.__dbClient.remove(data['_id'])
                 self.__dbClient.changeTable(validatePool)
-                self.__dbClient.put(proxy)
+                data['validatetime'] = validatetime
+                self.__dbClient.put(data)
+            else:
+                change = {}
+                score = data['score'] -2
+                if score < 0 :
+                    self.__dbClient.remove(data['_id'])
+                else:
+                    change['score'] = score
+                    change['validatetime'] = validatetime
+                    self.__dbClient.update({'proxy':data['proxy']} , {'$set':change})
             self.__dbClient.changeTable(commonPool)
-            proxy = self.__dbClient.get()
+            data = self.__dbClient.get_one()
 
 def validate_proxy_pool():
     schedule = ProxyValidate()

@@ -7,6 +7,8 @@ from Utils.ReadConfigUtil import ReadConfigUtil
 from Utils.Logger import Logger
 from DB.DBClientFactory import DBClientFactory
 from datetime import  datetime
+import time
+
 from Utils.Constants import schedulerMinutes , dbName , commonPool ,freeProxy as proxySections
 
 import logging
@@ -17,6 +19,7 @@ fmt = logging.Formatter('%(levelname)s:%(name)s:%(message)s')
 h = logging.StreamHandler()
 h.setFormatter(fmt)
 log.addHandler(h)
+
 
 
 __author__ = 'YuLuo'
@@ -47,18 +50,32 @@ class ProxyRefreshSchedule(object):
                 logger.error('error')
         logger.info('begin insert data !')
         i = 0
+        new_set = list()
+
+        old_proxy_list = self.__dbClient.getAllProxy()
+
         for proxy in proxy_set:
-            result = self.saveData(proxy)
-            if result is not None:
-                i = i + 1
+            if len(proxy) > 6:
+                if proxy not in old_proxy_list:
+                    downtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+                    data = {'proxy': proxy, 'downtime': downtime, 'score': 10}
+                    i = i + 1
+                    new_set.append(data)
+
+                # datetime1 = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+                # data = {'proxy': proxy, 'downtime': datetime1, 'score': 10}
+                # result = self.saveData(data)
+                # if not result:
+
+        self.__dbClient.insert_many(new_set)
         logger.info('end insert data ! - success ')
         end_time = datetime.now()
         use_time = (end_time -start_time).total_seconds()
         logger.info("完成一次周期刷新，耗时：%s 秒" % use_time)
-        logger.info("本次刷新新增ip: %s 个 ，其中有效ip : %s 个" %(len(proxy_set) , i))
+        logger.info("本次刷新共下载代理: %s 个 ，其中有效代理 : %s 个" %(len(proxy_set) , i))
 
-    def saveData(self ,proxy):
-        return self.__dbClient.put(proxy)
+    # def saveData(self ,data):
+    #     return self.__dbClient.find(data)
 
 def main():
     proxySchedule = ProxyRefreshSchedule()

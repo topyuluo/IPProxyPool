@@ -23,12 +23,13 @@ def time(web):
         return __deco
     return deco
 
-def validUserProxy(proxy):
+def validUserProxy(data):
     """
     validate available proxy
     :param proxy:
     :return:
     """
+    proxy = data['proxy']
     proxy = {
         'http':proxy ,
         'https':proxy}
