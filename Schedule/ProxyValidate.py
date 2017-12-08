@@ -7,6 +7,7 @@ from Utils.ProcessUtil import ProcessUtil
 import time
 from DB.DBClientFactory import DBClientFactory
 from Utils.Constants import sleepTime ,dbName ,commonPool ,validatePool
+import threading
 """
     验证代理类
 """
@@ -58,10 +59,21 @@ def validate_proxy_pool():
 
 def run():
     logger.info("[ProxyValidate.py] Run Success !")
-    process = ProcessUtil()
-    process.putProcessPool(validate_proxy_pool)
-    process.start()
-    process.join()
+    # process = ProcessUtil()
+    # process.putProcessPool(validate_proxy_pool)
+    # process.start()
+    # process.join()
+    threads = []
+    t= threading.Thread(target=validate_proxy_pool ,args=())
+    t1 = threading.Thread(target=validate_proxy_pool ,args=())
+    t2 = threading.Thread(target=validate_proxy_pool ,args=())
+
+    threads.append(t)
+    threads.append(t1)
+    threads.append(t2)
+
+    for t in threads:
+        t.start()
 
 if __name__ == '__main__':
     run()
