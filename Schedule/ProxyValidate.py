@@ -54,26 +54,42 @@ class ProxyValidate(object):
             data = self.__dbClient.get_one()
 
 def validate_proxy_pool():
+    # if mutex.acquire(1):
+    print("12323")
     schedule = ProxyValidate()
     schedule.validate_proxy()
+    mutex.release()
+
+
+num = 0
+mutex = threading.Lock()
 
 def run():
     logger.info("[ProxyValidate.py] Run Success !")
-    # process = ProcessUtil()
-    # process.putProcessPool(validate_proxy_pool)
-    # process.start()
-    # process.join()
-    threads = []
-    t= threading.Thread(target=validate_proxy_pool ,args=())
-    t1 = threading.Thread(target=validate_proxy_pool ,args=())
-    t2 = threading.Thread(target=validate_proxy_pool ,args=())
+    process = ProcessUtil()
+    process.putProcessPool(validate_proxy_pool)
+    process.start()
+    process.join()
 
-    threads.append(t)
-    threads.append(t1)
-    threads.append(t2)
+    
+    # threads = []
+    # t= threading.Thread(target=validate_proxy_pool ,args=())
+    # t1 = threading.Thread(target=validate_proxy_pool ,args=())
+    # t2 = threading.Thread(target=validate_proxy_pool ,args=())
+    # t = validate_proxy_pool()
+    # t1 = validate_proxy_pool()
+    # t2 = validate_proxy_pool()
+    #
+    # threads.append(t)
+    # threads.append(t1)
+    # threads.append(t2)
+    #
+    # for t in threads:
+    #     t.setDaemon(True)
+    #     t.start()
+    # for t in threads:
+    #     t.join()
 
-    for t in threads:
-        t.start()
 
 if __name__ == '__main__':
     run()

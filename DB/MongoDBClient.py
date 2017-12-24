@@ -84,6 +84,7 @@ class MongoDBClient(DBClient):
    def get_one(self):
       data = self.__dbName[self.name].find().sort('score', pymongo.DESCENDING)[0]
       print(data)
+      print("/////////////////////////////////////")
       self.remove(data['_id'])
       return data
 
