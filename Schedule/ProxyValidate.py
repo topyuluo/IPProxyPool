@@ -71,7 +71,7 @@ def run():
     process.start()
     process.join()
 
-    
+
     # threads = []
     # t= threading.Thread(target=validate_proxy_pool ,args=())
     # t1 = threading.Thread(target=validate_proxy_pool ,args=())
